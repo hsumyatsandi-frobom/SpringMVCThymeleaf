@@ -49,7 +49,8 @@ public class OrganizationController {
 		session = request.getSession(false);
 		if (session == null) {
 			return "redirect:login";
-		} else {
+		} 
+		else {
 
 			int userId = (Integer) session.getAttribute("userId");
 			List<Organization> organizationList = this.organizationService.findAll();
@@ -81,7 +82,8 @@ public class OrganizationController {
 		session = request.getSession(false);
 		if (session == null) {
 			return "redirect:/login";
-		} else {
+		}
+		else {
 			session.setAttribute("orgId", id);
 			List<User> userNameList = userService.findUserNameByOrgnId(id);
 			Organization organizationId = organizationService.findById(id);
@@ -140,7 +142,7 @@ public class OrganizationController {
 
 	}
 
-	@RequestMapping(value = "/neworganization", method = RequestMethod.POST)
+	@RequestMapping(value = "/organizations/new", method = RequestMethod.POST)
 	public String createOrganization(@Validated @ModelAttribute Organization organization, BindingResult result,
 			Model model, HttpServletRequest request) {
 		if (result.hasErrors()) {
@@ -165,7 +167,7 @@ public class OrganizationController {
 
 			}
 
-			return "redirect:organizations";
+			return "redirect:/organizations";
 		}
 
 	}
