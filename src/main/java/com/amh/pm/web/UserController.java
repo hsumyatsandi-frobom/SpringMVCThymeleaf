@@ -46,7 +46,7 @@ public class UserController {
 		User u = userService.userByName(name, password);
 		if (u == null) {
 			
-			session.setAttribute("message", "Username or Password Do Not Correct");
+			model.addAttribute("message", "Username or Password Do Not Correct");
 			return "redirect:login";
 		} 
 		else {

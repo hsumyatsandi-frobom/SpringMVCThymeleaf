@@ -9,10 +9,13 @@
 	<h4>
 		<font color="green"> Add New Organization Member </font>
 	</h4>
+	
 	<font color="red"><p th:text="${noNameError}"></p></font>
-	<font color="red">
-		<p th:text="${existMember}"></p>
-	</font>
+	
+	<font color="red"><p th:text="${existMember}"></p></font>
+	
+	<font color="red"><p th:text="${userNameEmptyEror}"></p></font>
+
 	<form action="#"
 		th:action="@{'/organization/'+${orgId}+'/members/new'}"
 		th:object="${user}" method="post">
