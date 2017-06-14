@@ -43,7 +43,7 @@ public class UserDaoImpl implements UserDao {
 
 		} else {
 
-			entityManager.persist(user);
+			entityManager.merge(user);
 
 		}
 
@@ -143,5 +143,46 @@ public class UserDaoImpl implements UserDao {
 		return u;
 
 	}
+
+    @Override
+    public User findUserByName(String name) {
+        // TODO Auto-generated method stub
+        User u = null;
+
+        try {
+
+            Query q = entityManager.createQuery("select u from User u WHERE u.name=?");
+            q.setParameter(1, name);
+            u = (User) q.getSingleResult();
+
+        } catch (NoResultException e) {
+
+            System.out.println("Error is :" + e);
+
+        }
+
+        return u;
+
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        // TODO Auto-generated method stub
+        User u = null;
+
+        try {
+
+            Query q = entityManager.createQuery("select u from User u WHERE u.email=?");
+            q.setParameter(1, email);
+            u = (User) q.getSingleResult();
+
+        } catch (NoResultException e) {
+
+            System.out.println("Error is :" + e);
+
+        }
+
+        return u;
+    }
 
 }

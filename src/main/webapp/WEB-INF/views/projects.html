@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+
+<title>Organizations</title>
+</head>
+<body>
+	<h3>Projects</h3>
+	
+
+	<table>
+		<tr th:each="project : ${projectNames}">
+			<td th:text="${project.name}"></td>
+		</tr>
+		<tr>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+		</tr>
+		<tr>
+			<td><a href="#"
+				th:href="@{'/organizations/'+${organizationId}+'/projects/new'}">Add
+					New</a></td>
+		</tr>
+	</table>
+
+</body>
+
+</html>

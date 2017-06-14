@@ -22,117 +22,113 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table
 public class User {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
 
-	@Column(name = "name", nullable = false, unique = true)
-	@NotNull
-	@NotEmpty(message = "Please enter your name")
-	private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
-	@Column(name = "email", nullable = false, unique = true)
-	@Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\." + "[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
-			+ "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid e-mail")
-	@NotEmpty(message = "Please enter your password.")
-	private String email;
+    @Column(name = "name", nullable = false, unique = true)
+    @NotEmpty
+    private String name;
 
-	@NotNull
-	@Column(name = "password", nullable = false, unique = false)
-	@NotEmpty(message = "Please enter your password.")
-	@Size(min = 3, max = 80, message = "Your password must between 3 and 80 characters")
-	private String password;
+    @Column(name = "email", nullable = false, unique = true)
+    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\." + "[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
+            + "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid e-mail")
+    @NotEmpty
+    private String email;
 
-	@OneToMany(mappedBy = "user")
-	private List<ProjectMember> project;
+    @Column(name = "password", nullable = false, unique = false)
+    @NotEmpty
+    @Size(min = 3, max = 80, message = "Your password must between 3 and 80 characters")
+    private String password;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "OrganizationMember", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "organizationId", referencedColumnName = "id"))
-	private List<Organization> orgList;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "ProjectMember", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "projectId", referencedColumnName = "id"))
+    private List<Project> projects;
 
-	public User() {
-		super();
-	}
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "OrganizationMember", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "organizationId", referencedColumnName = "id"))
+    private List<Organization> orgList;
 
-	public User(String email, String name, String password) {
-		super();
+    public User() {
+        super();
+    }
 
-		this.email = email;
-		this.name = name;
-		this.password = password;
-	}
+    public User(String email, String name, String password) {
+        super();
 
-	public int getId() {
-		return id;
-	}
+        this.email = email;
+        this.name = name;
+        this.password = password;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public List<ProjectMember> getProject() {
-		return project;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }   
 
-	public void setProject(List<ProjectMember> project) {
-		this.project = project;
-	}
+    public List<Organization> getOrgList() {
+        return orgList;
+    }
 
-	public List<Organization> getOrgList() {
-		return orgList;
-	}
+    public void setOrgList(List<Organization> orgList) {
+        this.orgList = orgList;
+    }
+    
+    public List<Project> getProjects() {
+        return projects;
+    }
 
-	public void setOrgList(List<Organization> orgList) {
-		this.orgList = orgList;
-	}
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
 
-	@Override
-	public boolean equals(Object object) {
-		User user = (User) object;
-		if (user.id == this.id) {
-			return true;
-		}
-		return false;
-	}
+    @Override
+    public boolean equals(Object object) {
+        User user = (User) object;
+        if (user.id == this.id) {
+            return true;
+        }
+        return false;
+    }
 
-	@Override
-	public int hashCode() {
-		return id;
-	}
+    @Override
+    public int hashCode() {
+        return id;
+    }
 
-	/*
-	 * @Override public boolean equals(Object obj) { if (obj == this) return
-	 * true; if (!(obj instanceof User)) return false; User user = (User) obj;
-	 * return user.getName() == this.getName() && user.getEmail() ==
-	 * this.getEmail() && user.getPassword() == this.getPassword(); }
-	 * 
-	 * @Override public int hashCode() { int result = 17; result = 31 * result +
-	 * name.hashCode(); result = 31 * result + email.hashCode(); result = 31 *
-	 * result + password.hashCode(); return result; }
-	 */
+    /*
+     * @Override public boolean equals(Object obj) { if (obj == this) return true; if (!(obj instanceof User)) return false;
+     * User user = (User) obj; return user.getName() == this.getName() && user.getEmail() == this.getEmail() &&
+     * user.getPassword() == this.getPassword(); }
+     * @Override public int hashCode() { int result = 17; result = 31 * result + name.hashCode(); result = 31 * result +
+     * email.hashCode(); result = 31 * result + password.hashCode(); return result; }
+     */
 }

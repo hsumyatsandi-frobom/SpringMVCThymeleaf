@@ -11,25 +11,32 @@
 
 	<font color="red"><p th:text="${orgError}"></p></font>
 
-	<a href="#" th:href="@{/organizations/new}">ADD</a>
+	<a href="#" th:href="@{/organizations/new}">ADD New Organization</a>
 	<br />
 	<br /> Organizations:
 
 	<table>
 		<tr th:each="organization : ${organizationsOwners}">
 			<td th:text="${organization.name}"></td>
+			<td></td>
 			<td><a href="#"
 				th:href="@{'/organization/' + ${organization.id}+'/members'}">Members</a></td>
+			<td></td>
+			<td><a href="#"
+				th:href="@{'/organizations/' + ${organization.id}+'/projects'}">Projects</a></td>
 		</tr>
 	</table>
-
-	Organizations As Member:
+	<br /> Organizations As Member:
 
 	<table>
 		<tr th:each="organization : ${organizationsNotOwner}">
 			<td th:text="${organization.name}"></td>
+			<td></td>
 			<td><a href="#"
 				th:href="@{'/organization/' + ${organization.id}+'/members'}">Members</a></td>
+			<td></td>
+			<td><a href="#"
+				th:href="@{'/organizations/' + ${organization.id}+'/projects'}">Projects</a></td>
 		</tr>
 	</table>
 
